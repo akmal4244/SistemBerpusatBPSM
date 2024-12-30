@@ -44,7 +44,7 @@ class HomeController extends Controller
         $token = $user->createToken('STK')->plainTextToken;
         if ($to == 'STK') {
             // return redirect('http://stk.local/authenticate?token=' . $token);
-            return redirect('http://10.22.28.236/stk/authenticate?token=' . $token);
+            return redirect('http://10.22.28.183/stk/authenticate?token=' . $token);
           
         } else {
             return redirect('dashboard');

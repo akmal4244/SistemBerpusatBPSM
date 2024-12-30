@@ -19,8 +19,7 @@
 
                         <div class=" d-flex flex-column justify-content-center align-items-center">
                             <div class="text-center" style="color:black;">
-                                <img src="https://www.moe.gov.my/storage/files/shares/1704770967_jata-negara-svg.svg" width="40%" class="mx-1">
-                                <label style="font-size:10px;">KEMENTERIAN PENDIDIKAN MALAYSIA</label>
+                                <img src="{{ asset('asset/image/Kementerian_Pendidikan_Malaysia_logo_1.png')}}" width="20%" class="mx-1">
                                 <br><br>
                                 <h4>SISTEM PENGURUSAN BPSM</h4>
                                 <br>

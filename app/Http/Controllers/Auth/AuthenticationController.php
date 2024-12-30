@@ -162,11 +162,26 @@ class AuthenticationController extends Controller
     }
     public function register_submit(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            //'email' => 'required|email:users',
+        // Validate input
+        $validated = $request->validate([
+            'Fullname' => 'required',
             'Employee_ID' => 'required|numeric',
-            'password' => 'required|min:8|max:12'
+            'Email' => 'required|email',
+            'Telephone' => 'required|numeric',
+            'Position' => 'required',
+            'Department' => 'required',
+            'Unit' => 'required',
+            'Password' => 'required|min:8',
+        ], [
+            'Fullname.required' => 'Sila masukkan nama penuh',
+            'Employee_ID.required' => 'Sila masukkan No.Kad Pengenalan',
+            'Email.required' => 'Sila masukkan email',
+            'Email.email' => 'Sila masukkan email yang betul',
+            'Position.required' => 'Sila masukkan position',
+            'Department.required' => 'Sila pilih cawangan',
+            'Unit.required' => 'Sila masukkan unit',
+            'Password.required' => 'Sila masukkan kata laluan',
+            'Password.min' => 'Kata Laluan mestilah sekurang-kurangnya :min aksara.',
         ]);
 
         //check user is exist in user_pinas table ?
@@ -176,17 +191,18 @@ class AuthenticationController extends Controller
         if ($user == null) {
 
             $user = new User();
-            $user->Fullname = $request->name;
+            $user->Fullname = $request->Fullname;
+            $user->Email = $request->Email;
             $user->Employee_ID = $request->Employee_ID;
-            $user->Password = Hash::make($request->password);
-            $user->Employee_ID = $request->ic;
-            $user->Position = $request->position;
-            $user->Department = $request->department;
-            $user->Unit = $request->unit;
-            $user->Telephone = $request->phone;
+            $user->Password = Hash::make($request->Password);
+            $user->Employee_ID = $request->Employee_ID;
+            $user->Position = $request->Position;
+            $user->Department = $request->Department;
+            $user->Unit = $request->Unit;
+            $user->Telephone = $request->Telephone;
             $result = $user->save();
             // Update the user_id column with the newly created ID
-            $user->User_ID = $user->id; // Use the $user->id property directly
+            //$user->User_ID = $user->id; // Use the $user->id property directly
             $user->save();
         } else { //exist in users_pinas table
             return back()->withErrors(['Employee_ID' => 'Tidak Berjaya. Akaun Tersebut Telah Didaftar']);

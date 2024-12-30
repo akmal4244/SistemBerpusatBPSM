@@ -125,7 +125,7 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item">
-                            <a  href="http://10.22.28.236/bpsm/dashboard" role="button">
+                            <a  href="http://10.22.28.183/bpsm/dashboard" role="button">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Kembali ke Sistem Pengurusan BPSM</span>
                             </a>
                         </li>

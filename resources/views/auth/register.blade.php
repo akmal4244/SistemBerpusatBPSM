@@ -54,52 +54,52 @@
                                             </div>
                                             @endif
                                             <div class="form-group">
-                                                <label for="name">Nama Penuh</label>
-                                                <input type="text" name="name" class="form-control" placeholder="MOHAMAD NURAKMAL BIN AB RASHID">
+                                                <label for="Fullname">Nama Penuh</label>
+                                                <input type="text" name="Fullname" class="form-control" value="{{ old('Fullname') }}" placeholder="MOHAMAD NURAKMAL BIN AB RASHID">
                                                 <span class="text-danger">
-                                                    @error('name')
+                                                    @error('Fullname')
                                                     {{$message}}
                                                     @enderror
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Kad Pengenalan (Tanpa "-")</label>
-                                                <input type="text" name="ic" class="form-control" placeholder="Tanpa '-'">
+                                                <label for="Employee_ID">Kad Pengenalan (Tanpa "-")</label>
+                                                <input type="text" name="Employee_ID" class="form-control" value="{{ old('Employee_ID') }}" placeholder="Tanpa '-'">
                                                 <span class="text-danger">
-                                                    @error('name')
+                                                    @error('Employee_ID')
                                                     {{$message}}
                                                     @enderror
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="email">Emel</label>
-                                                <input type="email" name="email" class="form-control" placeholder="nurakmal@moe.gov.my">
+                                                <label for="Email">Emel</label>
+                                                <input type="email" name="Email" class="form-control" value="{{ old('Email') }}" placeholder="nurakmal@moe.gov.my">
                                                 <span class="text-danger">
-                                                    @error('email')
+                                                    @error('Email')
                                                     {{$message}}
                                                     @enderror
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Jawatan, Skim & Gred</label>
-                                                <input type="text" name="position" class="form-control" placeholder="PEGAWAI TEKNOLOGI MAKLUMAT F41">
+                                                <label for="Position">Jawatan, Skim & Gred</label>
+                                                <input type="text" name="Position" class="form-control" value="{{ old('Position') }}" placeholder="PEGAWAI TEKNOLOGI MAKLUMAT F41">
                                                 <span class="text-danger">
-                                                    @error('name')
+                                                    @error('Position')
                                                     {{$message}}
                                                     @enderror
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="department">Cawangan</label>
-                                                <select class="form-control" id="department" name="department">
+                                                <label for="Department">Cawangan</label>
+                                                <select class="form-control" id="Department" name="Department">
                                                     @foreach($department as $depart)
                                                     <option value="{{ $depart->title }}">{{ $depart->title2  . ' - ' . $depart->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="unit">Unit</label>
-                                                <select class="form-control" id="unit" name="unit">
+                                                <label for="Unit">Unit</label>
+                                                <select class="form-control" id="Unit" name="Unit">
                                                     @foreach($unit as $units)
                                                     <option value="{{ $units->title }}">{{ $units->title }}</option>
                                                     @endforeach
@@ -107,19 +107,19 @@
                                             </div>                                            
 
                                             <div class="form-group">
-                                                <label for="name">No. Telefon</label>
-                                                <input type="text" name="phone" class="form-control" placeholder="0123456789">
+                                                <label for="Telephone">No. Telefon</label>
+                                                <input type="text" name="Telephone" class="form-control" value="{{ old('Telephone') }}" placeholder="0123456789">
                                                 <span class="text-danger">
-                                                    @error('name')
+                                                    @error('Telephone')
                                                     {{$message}}
                                                     @enderror
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="password">Kata Laluan</label>
-                                                <input type="password" name="password" class="form-control">
+                                                <label for="Password">Kata Laluan</label>
+                                                <input type="password" name="Password" class="form-control">
                                                 <span class="text-danger">
-                                                    @error('password')
+                                                    @error('Password')
                                                     {{$message}}
                                                     @enderror
                                                 </span>

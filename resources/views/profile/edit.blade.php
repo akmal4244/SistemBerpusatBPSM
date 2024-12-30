@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-status bg-blue"></div>
                 <div class="card-header">
-                    <h3 class="card-title">Makluman</h3>
+                    <h3 class="card-title">Kemaskini Profil Pengguna</h3>
                 </div>
                 <div class="card-body">
                     <form action="{{route('profile.update', $user->id)}}" method="post" enctype="multipart/form-data">
