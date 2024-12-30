@@ -1,0 +1,28 @@
+
+    
+    
+    <!-- Bootstrap core JavaScript -->
+   
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+
+
+    <!-- Core plugin JavaScript-->
+
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+
+
+    <!-- Custom scripts for all pages-->
+  
+    <script src="{{ asset('asset/js/sb-admin-2.js') }}"></script>
+    <!-- <script src="{{ asset('asset/js/app.js') }}"></script> -->
+    <script src="{{ asset('asset/bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
+    <!-- Page level plugins -->
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script> -->
+    
