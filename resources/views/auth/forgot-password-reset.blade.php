@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +62,7 @@
                                         <div class="form-group row">
                                             <div class="col-lg-12">
                                                 
-                                                <p>Emel: {{ $tokenData->Email }} </p>
+                                                <p>Emel:    {{ $tokenData->Email }} </p>
 
                                             </div>
                                         </div>

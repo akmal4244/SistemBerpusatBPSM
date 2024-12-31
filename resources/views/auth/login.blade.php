@@ -86,7 +86,7 @@
 
                                         </div>
                                         <div class="text-center">
-                                            <a class="small" href="{{ route('login.form') }}">Log Masuk</a>
+                                         <a class="small" href="{{ route('register.form')}}">Daftar Akaun Baru!</a> | <a class="small" href="{{ route('password.forgot')}}">Terlupa Kata Laluan?</a>
                                         </div>
                                     </div>
                               
