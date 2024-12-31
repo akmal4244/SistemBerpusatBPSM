@@ -16,20 +16,20 @@
                 <div class="card-body p-3">
                     <!-- Nested Row within Card Body -->
                     <div class="row" style="margin:4%;">
-                        <div class="col-lg-12>
-                            <div class=" d-flex flex-column justify-content-center align-items-center">
+                        <div class="col-lg-12">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
                             <div class="d-flex justify-content-center">
-                                <img src="asset/image/Kementerian_Pendidikan_Malaysia_logo.png" width="20%" class="mx-1">
+                                <img src="{{asset('asset/image/Kementerian_Pendidikan_Malaysia_logo.png')}}" width="40%" class="mx-1">
                             </div>
 
                             <!-- <img src="asset/image/KITA@BPSM.png" width="40%" class="mx-2"> -->
                             <br>
                             <div class="text-center" style="color:black;">
-                                <h4>Sistem Pengurusan BPSM</h4>
+                                <h4>SISTEM PENGURUSAN BPSM</h4>
                             </div>
                             <br>
                             <div class="row justify-content-center">
-                                <div class="col-lg-8 col-md-6">
+                                
                                     <div class="align-items-center">
                                         @if ($errors->any())
                                         <div class="alert alert-danger">
@@ -40,19 +40,20 @@
                                             </ul>
                                         </div>
                                         @endif
-
+                                        @if(session('error'))
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
+                                    </div>
+                                    @elseif(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                    @endif
                                         <form action="{{route('register.submit')}}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            @if (Session::has('success'))
-                                            <div class="alert alert-success">
-                                                {{Session::get('success')}}
-                                            </div>
-                                            @endif
-                                            @if (Session::has('fail'))
-                                            <div class="alert alert-danger">
-                                                {{Session::get('fail')}}
-                                            </div>
-                                            @endif
+                                            
+                                            <div class="row">
+                                            <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="Fullname">Nama Penuh</label>
                                                 <input type="text" name="Fullname" class="form-control" value="{{ old('Fullname') }}" placeholder="MOHAMAD NURAKMAL BIN AB RASHID">
@@ -81,6 +82,17 @@
                                                 </span>
                                             </div>
                                             <div class="form-group">
+                                                <label for="Telephone">No. Telefon</label>
+                                                <input type="text" name="Telephone" class="form-control" value="{{ old('Telephone') }}" placeholder="0123456789">
+                                                <span class="text-danger">
+                                                    @error('Telephone')
+                                                    {{$message}}
+                                                    @enderror
+                                                </span>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                            <div class="form-group">
                                                 <label for="Position">Jawatan, Skim & Gred</label>
                                                 <input type="text" name="Position" class="form-control" value="{{ old('Position') }}" placeholder="PEGAWAI TEKNOLOGI MAKLUMAT F41">
                                                 <span class="text-danger">
@@ -106,15 +118,7 @@
                                                 </select>
                                             </div>                                            
 
-                                            <div class="form-group">
-                                                <label for="Telephone">No. Telefon</label>
-                                                <input type="text" name="Telephone" class="form-control" value="{{ old('Telephone') }}" placeholder="0123456789">
-                                                <span class="text-danger">
-                                                    @error('Telephone')
-                                                    {{$message}}
-                                                    @enderror
-                                                </span>
-                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label for="Password">Kata Laluan</label>
                                                 <input type="password" name="Password" class="form-control">
@@ -124,13 +128,14 @@
                                                     @enderror
                                                 </span>
                                             </div>
-
+                                    </div>
                                             <br>
+                                            <hr>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-block btn-success">Daftar</button>
                                             </div>
                                         </form>
-                                        <hr>
+                                        <br>
                                         <div class="text-center">
 
                                         </div>
@@ -138,7 +143,7 @@
                                             <a class="small" href="{{ route('login.form') }}">Log Masuk</a>
                                         </div>
                                     </div>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>
@@ -149,7 +154,16 @@
     </div>
     </div>
 
-
+    <script>
+        function passhideFunction() {
+            var x = document.getElementById("passhide");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 
     @include('layouts.footer')
 </body>

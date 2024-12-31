@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Helper;
 use Illuminate\Support\Facades\Password;
 use App\Models\password_reset_tokens;
+use Illuminate\Support\Str;
 
 
 
@@ -209,12 +210,57 @@ class AuthenticationController extends Controller
         }
 
         if ($result) {
-            return back()->with('success', 'You have registered successfully.');
-            return redirect('/')->with('success', 'Akaun Anda Telah Berjaya Direkod');
+            return back()->with('success', 'Akaun Anda Telah Berjaya Direkod.');
         } else {
             return back()->with('error', 'Mohon Hubungi Pihak ICT.');
         }
     }
+
+
+    //forgot password
+    public function password_forgot()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function password_forgot_store(Request $request)
+    {   
+        // Validate the request
+        $request->validate([
+            'Employee_ID' => 'required|exists:users,Employee_ID', // Validate that Employee_ID exists in users table
+        ]);
+        
+        // Find the user by Employee_ID
+        $user = User::where('Employee_ID', $request->Employee_ID)->first();
+
+        if ($user) {
+            $email = $user->Email;
+
+            // Generate a secure token
+            $token = Str::random(64);
+            
+            // Insert or update the token in the password_reset_tokens table
+            password_reset_tokens::updateOrInsert(
+                ['email' => $email], // Match by email
+                [
+                    'email' => $email,
+                    'token' => bcrypt($token), // Hash the token for security
+                    'created_at' => now(),
+                ]
+            );
+            $gettoken  = password_reset_tokens::where('Email',$email)->first();
+            $token = $gettoken->token;
+            // dd($user->id);
+            //dd($token);
+            // Send the password reset email
+            Helper::email_forgot_pass($user->id, $token);
+
+            return back()->with('success', 'Sila semak email anda untuk tukar kata laluan.');
+        } else {
+            return back()->with('error', 'Nombor Kad Pengenalan Tidak Dalam Rekod.');
+        }
+    }
+
 
 
     ///Logout

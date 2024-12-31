@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +30,7 @@
                             <div class="text-center" style="color:black;">
                                 <h4>SISTEM PENGURUSAN BPSM</h4>
                                 <br>
-                                <h5>Kemaskini Profil</h5>
+                                <h5>Tetap Semula Kata Laluan</h5>
                             </div>
                             <br>
                             <div class="row justify-content-center">
@@ -54,53 +57,19 @@
                                     @endif
 
                                     <!-- Password reset form -->
-                                    <form method="POST" action="{{ route('password.store') }}">
-                                        @csrf
-
-                                        <!-- Hidden token input -->
-                                        <input type="hidden" name="token" value="{{ $token }}">
-
-                                        <!-- IC input -->
+                                    <form action="{{ route('password.update') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="token" value="{{ request()->query('token') }}">
+                            
+                                        <!-- emel input -->
                                         <div class="form-group row">
                                             <div class="col-lg-12">
-                                                <label for="Employee_ID">No. Kad Pengenalan</label>
-                                                <input type="number" class="form-control" value="{{ $user->Employee_ID }}" disabled>
-                                                <input id="Employee_ID" type="number" class="form-control @error('Employee_ID') is-invalid @enderror" name="Employee_ID" value="{{ $user->Employee_ID }}" hidden>
-                                            </div>
-                                        </div>
-                                        <!-- Email input -->
-                                        <div class="form-group row">
-                                            <div class="col-lg-12">
-                                                <label for="Email">Emel</label>
-                                                <input id="Email" type="text" class="form-control @error('Email') is-invalid @enderror" name="Email" value="{{ $user->Email }}" disabled>
-                                            </div>
-                                        </div>
+                                                
+                                                <p>Emel: {{ $tokenData->Email }} </p>
 
-                                        <!-- Jawatan input -->
-                                        <div class="form-group row">
-                                            <div class="col-lg-12">
-                                                <label for="Position">Jawatan, Skim & Gred</label>
-                                                <input id="Position" type="text" class="form-control" name="Position" value="{{ old('Position',$user->Position) }}" required autofocus>
-                                                <span class="text-danger">
-                                                    @error('Position')
-                                                    {{$message}}
-                                                    @enderror
-                                                </span>
                                             </div>
                                         </div>
-
-                                        <!-- Phone -->
-                                        <div class="form-group row">
-                                            <div class="col-lg-12">
-                                                <label for="Telephone">No. Telefon</label>
-                                                <input id="Telephone" type="text" class="form-control" name="Telephone" value="{{ old('Telephone',$user->Telephone) }}" required autofocus>
-                                                <span class="text-danger">
-                                                    @error('Telephone')
-                                                    {{$message}}
-                                                    @enderror
-                                                </span>
-                                            </div>
-                                        </div>
+                                      
 
                                         <!-- Password input -->
                                         <div class="form-group">
@@ -168,3 +137,4 @@
 
 </html>
     
+

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserMgtController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Helper;
 
 
@@ -18,9 +19,16 @@ Route::post('login', [AuthenticationController::class, 'loginUser'])->name('logi
 Route::get('register', [AuthenticationController::class, 'register_form'])->name('register.form');
 Route::post('register', [AuthenticationController::class, 'register_submit'])->name('register.submit');
 
+//first time login reset password
 Route::get('password/reset/{token}/{id}', [AuthenticationController::class, 'password_reset'])->name('password.reset');
 Route::post('password/reset', [AuthenticationController::class, 'password_store'])->name('password.store');
 
+//forgot password
+Route::get('password/forgot', [AuthenticationController::class, 'password_forgot'])->name('password.forgot');
+Route::post('password/forgot', [AuthenticationController::class, 'password_forgot_store'])->name('password.forgot.store');
+//user reset password
+Route::get('password-reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password-reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 

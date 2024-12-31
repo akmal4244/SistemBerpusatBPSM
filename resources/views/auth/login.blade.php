@@ -12,43 +12,48 @@
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
-            <div class="card o-hidden border-0 shadow-lg my-4">
+            <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-3">
                     <!-- Nested Row within Card Body -->
-                    <div class="row" style="margin:3%;">
-
-                        <div class=" d-flex flex-column justify-content-center align-items-center">
-                            <div class="text-center" style="color:black;">
-                                <img src="{{ asset('asset/image/Kementerian_Pendidikan_Malaysia_logo_1.png')}}" width="20%" class="mx-1">
-                                <br><br>
-                                <h4>SISTEM PENGURUSAN BPSM</h4>
-                                <br>
+                    <div class="row" style="margin:4%;">
+                        <div class="col-lg-12">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{asset('asset/image/Kementerian_Pendidikan_Malaysia_logo.png')}}" width="40%" class="mx-1">
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    @if ($errors->any())
+                            <!-- <img src="asset/image/KITA@BPSM.png" width="40%" class="mx-2"> -->
+                            <br>
+                            <div class="text-center" style="color:black;">
+                                <h4>SISTEM PENGURUSAN BPSM</h4>
+                            </div>
+                            <br>
+                            <div class="row justify-content-center">
+                                
+                                    <div class="align-items-center">
+                                        @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @endif
+                                        @if(session('error'))
                                     <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                        {{ session('error') }}
+                                    </div>
+                                    @elseif(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
                                     </div>
                                     @endif
-                                    <form action="{{route('login.user')}}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        @if (Session::has('success'))
-                                        <div class="alert alert-success">
-                                            {{Session::get('success')}}
-                                        </div>
-                                        @endif
-                                        @if (Session::has('error'))
-                                        <div class="alert alert-danger">
-                                            {{Session::get('error')}}
-                                        </div>
-                                        @endif
 
+                                        <form action="{{route('login.user')}}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        
+                                        <div class="row">
                                         <div class="form-group">
                                             <label for="Employee_ID">Nombor Kad Pengenalan</label>
                                             <input type="number" name="Employee_ID" class="form-control" placeholder="Tidak perlu masukkan '-'">
@@ -74,23 +79,26 @@
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-block btn-primary">Log Masuk</button>
                                         </div>
+                                    </div>
                                     </form>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="{{ route('register.form')}}">Daftar Akaun Baru!</a> | <a class="small" href="#">Terlupa Kata Laluan?</a>
-                                </div>
+                                        <br>
+                                        <div class="text-center">
 
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="small" href="{{ route('login.form') }}">Log Masuk</a>
+                                        </div>
+                                    </div>
+                              
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-            @include('layouts.footer')
         </div>
-
     </div>
-
+    </div>
+    </div>
 
     <script>
         function passhideFunction() {
@@ -103,6 +111,8 @@
         }
     </script>
 
+    @include('layouts.footer')
 </body>
 
 </html>
+
