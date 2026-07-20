@@ -1,18 +1,15 @@
 <?php
-// index.php
+// create.php
 session_start();
 
-
-// 2) Database connection (adjust your credentials)
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+// Authentication guard — only a logged-in MBJ admin session may create records.
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: index.php');
+    exit();
 }
+
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 3) Helper: generate a new random token
 function generateToken() {

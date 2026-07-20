@@ -8,16 +8,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
-// 2) Connect to DB
-$servername  = "localhost";
-$dbUsername  = "root";
-$dbPassword  = "";
-$dbName      = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("DB Connection failed: " . $conn->connect_error);
-}
+// 2) Connect to DB (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 3) Re‐fetch this user’s “system” JSON from the users table
 $userId = intval($_SESSION['user_id']);

@@ -2,3 +2,9 @@
 *.bak
 node_modules/
 .env
+
+# Kredensial pangkalan data setempat — JANGAN commit
+db.local.php
+
+# Dump/backup pangkalan data — mengandungi data sensitif (users, tokens, passwords)
+*.sql

@@ -1,18 +1,15 @@
 <?php
-// index.php
+// delete.php
 session_start();
 
-
-// 2) Database connection (adjust your credentials)
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+// Authentication guard — only a logged-in MBJ admin session may delete records.
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: index.php');
+    exit();
 }
+
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 3) Helper: generate a new random token
 function generateToken() {
@@ -26,12 +23,15 @@ if (! isset($_GET['token'])) {
     $encoded   = urlencode($backUrl);}
     
 
-$id = $_GET['id'];
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
-$sql = "DELETE FROM mbj WHERE id=$id";
-if ($conn->query($sql) === TRUE) {
+$stmt = $conn->prepare("DELETE FROM mbj WHERE id = ?");
+$stmt->bind_param("i", $id);
+if ($stmt->execute()) {
     header("Location: dashboard.php");
+    exit();
 } else {
-    echo "Error deleting record: " . $conn->error;
+    echo "Error deleting record.";
 }
+$stmt->close();
 ?>

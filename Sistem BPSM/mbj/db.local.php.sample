@@ -1,0 +1,24 @@
+<?php
+/**
+ * db.local.php.sample — Templat konfigurasi sambungan pangkalan data.
+ *
+ * LANGKAH PEMASANGAN:
+ *   1. Salin fail ini kepada db.local.php  (cp db.local.php.sample db.local.php)
+ *   2. Isi kredensial sebenar di bawah, atau tetapkan pemboleh ubah persekitaran
+ *      BPSM_DB_HOST / BPSM_DB_USER / BPSM_DB_PASS / BPSM_DB_NAME.
+ *
+ * db.local.php di-.gitignore dan TIDAK boleh di-commit ke repositori.
+ */
+
+$bpsmDbHost = getenv('BPSM_DB_HOST') ?: 'localhost';
+$bpsmDbUser = getenv('BPSM_DB_USER') ?: '<DB_USER>';
+$bpsmDbPass = getenv('BPSM_DB_PASS') ?: '<DB_PASSWORD>';
+$bpsmDbName = getenv('BPSM_DB_NAME') ?: 'bpsm';
+
+$conn = new mysqli($bpsmDbHost, $bpsmDbUser, $bpsmDbPass, $bpsmDbName);
+if ($conn->connect_error) {
+    die('Database connection failed.');
+}
+if (method_exists($conn, 'set_charset')) {
+    $conn->set_charset('utf8mb4');
+}

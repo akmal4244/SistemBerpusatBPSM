@@ -6,16 +6,8 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mbj_feedback";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 function fetch_data($conn, $category) {
     $sql = "SELECT bil, isu, tindakan, id FROM mbj WHERE category='$category'";

@@ -1,14 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bpsm";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 function fetch_data($conn, $category, $order = 'created_at', $direction = 'DESC') {
     $sql = "SELECT bil, isu, tindakan, created_at FROM mbj WHERE category='$category' ORDER BY $order $direction";

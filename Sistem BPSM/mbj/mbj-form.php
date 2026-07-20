@@ -2,16 +2,8 @@
 // index.php
 session_start();
 
-// 2) Database connection (adjust your credentials)
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 3) Helper: generate a new random token
 function generateToken() {

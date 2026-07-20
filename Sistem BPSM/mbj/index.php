@@ -2,16 +2,8 @@
 // index.php
 session_start();
 
-// 1) Database connection
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+// 1) Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 2) Helper: generate a new random token
 function generateToken() {
@@ -99,31 +91,13 @@ if ($res && $res->num_rows === 1) {
     $updStmt->execute();
 }
 else {
-    // Decode base64 fallback
-    $decodedPayload = @json_decode(base64_decode($incomingToken), true);
-    if (! $decodedPayload || ! isset($decodedPayload['id'])) {
-        echo "Invalid token format!";
-        exit();
-    }
-    $userId = intval($decodedPayload['id']);
-
-    $uSql  = "SELECT * FROM users WHERE id = ?";
-    $uStmt = $conn->prepare($uSql);
-    $uStmt->bind_param("i", $userId);
-    $uStmt->execute();
-    $uRes = $uStmt->get_result();
-    if (! $uRes || $uRes->num_rows !== 1) {
-        echo "User not found!";
-        exit();
-    }
-    $user = $uRes->fetch_assoc();
-
-    // Create a new token
-    $newTok  = generateToken();
-    $insSql  = "INSERT INTO personal_access_tokens (tokenable_id, token, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
-    $insStmt = $conn->prepare($insSql);
-    $insStmt->bind_param("is", $userId, $newTok);
-    $insStmt->execute();
+    // SECURITY: token not found in the database.
+    // The previous code here base64-decoded the token as JSON and logged the
+    // user in by the `id` field — a trivial authentication bypass / account
+    // takeover (anyone could forge  ?token=<base64 of {"id":1}> ). That fallback
+    // has been REMOVED. An unrecognised token is now rejected outright.
+    header('Location: index.php');
+    exit();
 }
 
 // Extract “mbj” system role

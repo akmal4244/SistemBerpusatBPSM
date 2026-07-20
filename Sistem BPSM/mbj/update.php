@@ -1,18 +1,15 @@
 <?php
-// index.php
+// update.php
 session_start();
 
-
-// 2) Database connection (adjust your credentials)
-$servername = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "bpsm";
-
-$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+// Authentication guard — only a logged-in MBJ admin session may update records.
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: index.php');
+    exit();
 }
+
+// Database connection (credentials live in gitignored db.local.php)
+require __DIR__ . '/db.local.php';
 
 // 3) Helper: generate a new random token
 function generateToken() {
@@ -108,34 +105,33 @@ if (! isset($_GET['token'])) {
 </head>
 <body>
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "mbj_feedback";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    // Reuse the single $conn (database `bpsm`) from db.local.php above.
+    // Previously this block opened a SECOND connection to a DIFFERENT database
+    // (`mbj_feedback`), so update.php wrote to a different table than
+    // create.php / delete.php / dashboard.php read from — a data inconsistency.
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $id = $_POST['id'];
+        $id = (int) $_POST['id'];
         $bil = $_POST['bil'];
         $isu = $_POST['isu'];
         $tindakan = $_POST['tindakan'];
-        $category = $_POST['category']; // Add this line to retrieve the selected category
+        $category = $_POST['category'];
 
-        $sql = "UPDATE mbj SET bil='$bil', isu='$isu', tindakan='$tindakan', category='$category' WHERE id=$id";
-        if ($conn->query($sql) === TRUE) {
+        $stmt = $conn->prepare("UPDATE mbj SET bil = ?, isu = ?, tindakan = ?, category = ? WHERE id = ?");
+        $stmt->bind_param("ssssi", $bil, $isu, $tindakan, $category, $id);
+        if ($stmt->execute()) {
             header("Location: dashboard.php");
+            exit();
         } else {
-            echo "Error updating record: " . $conn->error;
+            echo "Error updating record.";
         }
+        $stmt->close();
     } else {
-        $id = $_GET['id'];
-        $sql = "SELECT bil, isu, tindakan, category FROM mbj WHERE id=$id";
-        $result = $conn->query($sql);
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        $stmt = $conn->prepare("SELECT bil, isu, tindakan, category FROM mbj WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             ?>
